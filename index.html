@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learnora - Smart Education Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-graduation-cap"></i>
+                <span>Learnora</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#dashboard" class="nav-link active">Dashboard</a></li>
+                <li><a href="#courses" class="nav-link">My Courses</a></li>
+                <li><a href="#ai-tutor" class="nav-link">AI Tutor</a></li>
+                <li><a href="#wellness" class="nav-link">Wellness</a></li>
+                <li><a href="#community" class="nav-link">Community</a></li>
+                <li><a href="#ar-vr" class="nav-link">AR/VR</a></li>
+            </ul>
+            <div class="nav-actions">
+                <div class="notification-container">
+                    <button class="notification-btn" onclick="toggleNotifications()">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </button>
+                    <div class="notifications-dropdown" id="notifications-dropdown">
+                        <div class="notifications-header">
+                            <h4>Notifications</h4>
+                            <button class="mark-all-read" onclick="markAllNotificationsRead()">Mark all read</button>
+                        </div>
+                        <div class="notifications-list" id="notifications-list">
+                            <div class="notification-item unread" onclick="handleNotificationClick('assignment-physics')">
+                                <div class="notification-icon assignment">
+                                    <i class="fas fa-file-alt"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <h5>Physics Assignment Due Tomorrow</h5>
+                                    <p>Submit your quantum mechanics problem set by 11:59 PM</p>
+                                    <span class="notification-time">2 hours ago</span>
+                                </div>
+                                <div class="notification-status"></div>
+                            </div>
+
+                            <div class="notification-item unread" onclick="handleNotificationClick('quiz-math')">
+                                <div class="notification-icon quiz">
+                                    <i class="fas fa-question-circle"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <h5>Math Quiz Reminder</h5>
+                                    <p>Calculus quiz scheduled for Friday at 2:00 PM</p>
+                                    <span class="notification-time">4 hours ago</span>
+                                </div>
+                                <div class="notification-status"></div>
+                            </div>
+
+                            <div class="notification-item" onclick="handleNotificationClick('course-update')">
+                                <div class="notification-icon update">
+                                    <i class="fas fa-bell"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <h5>Course Content Updated</h5>
+                                    <p>New materials added to Data Structures & Algorithms</p>
+                                    <span class="notification-time">1 day ago</span>
+                                </div>
+                                <div class="notification-status"></div>
+                            </div>
+
+                            <div class="notification-item" onclick="handleNotificationClick('achievement')">
+                                <div class="notification-icon achievement">
+                                    <i class="fas fa-trophy"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <h5>Achievement Unlocked!</h5>
+                                    <p>You've maintained a 15-day learning streak</p>
+                                    <span class="notification-time">2 days ago</span>
+                                </div>
+                                <div class="notification-status"></div>
+                            </div>
+
+                            <div class="notification-item" onclick="handleNotificationClick('wellness-reminder')">
+                                <div class="notification-icon wellness">
+                                    <i class="fas fa-heart"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <h5>Wellness Check-in</h5>
+                                    <p>Take a moment to track your mood today</p>
+                                    <span class="notification-time">3 days ago</span>
+                                </div>
+                                <div class="notification-status"></div>
+                            </div>
+                        </div>
+                        <div class="notifications-footer">
+                            <button class="view-all-btn" onclick="viewAllNotifications()">View All Notifications</button>
+                        </div>
+                    </div>
+                </div>
+                <button class="settings-btn" onclick="toggleSettings()">
+                    <i class="fas fa-cog"></i>
+                </button>
+                <div class="user-avatar">
+                    <img src="https://via.placeholder.com/40x40/4f46e5/ffffff?text=U" alt="User">
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Button -->
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobile-nav">
+        <div class="mobile-nav-header">
+            <div class="nav-brand">
+                <i class="fas fa-graduation-cap"></i>
+                <span>Learnora</span>
+            </div>
+            <button class="mobile-close-btn" onclick="toggleMobileMenu()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <ul class="mobile-nav-menu">
+            <li><a href="#dashboard" class="mobile-nav-link active" onclick="toggleMobileMenu()">
+                <i class="fas fa-home"></i> Dashboard
+            </a></li>
+            <li><a href="#courses" class="mobile-nav-link" onclick="toggleMobileMenu()">
+                <i class="fas fa-book-open"></i> My Courses
+            </a></li>
+            <li><a href="#ai-tutor" class="mobile-nav-link" onclick="toggleMobileMenu()">
+                <i class="fas fa-robot"></i> AI Tutor
+            </a></li>
+            <li><a href="#wellness" class="mobile-nav-link" onclick="toggleMobileMenu()">
+                <i class="fas fa-heart"></i> Wellness
+            </a></li>
+            <li><a href="#community" class="mobile-nav-link" onclick="toggleMobileMenu()">
+                <i class="fas fa-users"></i> Community
+            </a></li>
+            <li><a href="#ar-vr" class="mobile-nav-link" onclick="toggleMobileMenu()">
+                <i class="fas fa-vr-cardboard"></i> AR/VR
+            </a></li>
+        </ul>
+    </div>
+
+    <!-- Settings Panel -->
+    <div id="settings-panel" class="settings-panel">
+        <div class="settings-content">
+            <div class="settings-header">
+                <h3>Settings</h3>
+                <button onclick="toggleSettings()" class="close-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="settings-body">
+                <div class="setting-item">
+                    <label class="setting-label">
+                        <span>Dark Mode</span>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="theme-toggle" onchange="toggleTheme()">
+                            <span class="slider"></span>
+                        </div>
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <label class="setting-label">
+                        <span>Notifications</span>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="notifications-toggle" checked>
+                            <span class="slider"></span>
+                        </div>
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <label class="setting-label">
+                        <span>AI Assistance</span>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="ai-toggle" checked>
+                            <span class="slider"></span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section active">
+            <div class="dashboard-header">
+                <div class="welcome-section">
+                    <h1>Welcome back, Student!</h1>
+                    <p>Ready to continue your learning journey?</p>
+                </div>
+                <div class="quick-stats">
+                    <div class="stat-card">
+                        <i class="fas fa-book-open"></i>
+                        <div>
+                            <h3>12</h3>
+                            <p>Active Courses</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-trophy"></i>
+                        <div>
+                            <h3>85%</h3>
+                            <p>Avg Score</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-fire"></i>
+                        <div>
+                            <h3>15</h3>
+                            <p>Day Streak</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <!-- Progress Overview -->
+                <div class="card progress-card">
+                    <h3>Learning Progress</h3>
+                    <div class="progress-items">
+                        <div class="progress-item">
+                            <span>Mathematics</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 75%"></div>
+                            </div>
+                            <span>75%</span>
+                        </div>
+                        <div class="progress-item">
+                            <span>Physics</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 60%"></div>
+                            </div>
+                            <span>60%</span>
+                        </div>
+                        <div class="progress-item">
+                            <span>Chemistry</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 85%"></div>
+                            </div>
+                            <span>85%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Recommendations -->
+                <div class="card ai-recommendations">
+                    <h3><i class="fas fa-robot"></i> AI Recommendations</h3>
+                    <div class="recommendation-list">
+                        <div class="recommendation-item">
+                            <i class="fas fa-lightbulb"></i>
+                            <div>
+                                <h4>Practice Calculus</h4>
+                                <p>You've shown improvement! Try advanced integration problems.</p>
+                            </div>
+                        </div>
+                        <div class="recommendation-item">
+                            <i class="fas fa-heart"></i>
+                            <div>
+                                <h4>Wellness Break</h4>
+                                <p>Take a 10-minute meditation break to reduce stress.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upcoming Tasks -->
+                <div class="card tasks-card">
+                    <h3>Upcoming Tasks</h3>
+                    <div class="task-list">
+                        <div class="task-item clickable" onclick="handleTaskClick('assignment-physics')">
+                            <div class="task-checkbox">
+                                <input type="checkbox" id="task1" onclick="event.stopPropagation();">
+                                <label for="task1"></label>
+                            </div>
+                            <div class="task-details">
+                                <h4>Submit Physics Assignment</h4>
+                                <p>Due: Tomorrow, 11:59 PM</p>
+                            </div>
+                            <span class="priority high">High</span>
+                            <i class="fas fa-chevron-right task-arrow"></i>
+                        </div>
+                        <div class="task-item clickable" onclick="handleTaskClick('quiz-math')">
+                            <div class="task-checkbox">
+                                <input type="checkbox" id="task2" onclick="event.stopPropagation();">
+                                <label for="task2"></label>
+                            </div>
+                            <div class="task-details">
+                                <h4>Math Quiz Preparation</h4>
+                                <p>Due: Friday, 2:00 PM</p>
+                            </div>
+                            <span class="priority medium">Medium</span>
+                            <i class="fas fa-chevron-right task-arrow"></i>
+                        </div>
+                        <div class="task-item clickable" onclick="handleTaskClick('chemistry-lab')">
+                            <div class="task-checkbox">
+                                <input type="checkbox" id="task3" onclick="event.stopPropagation();">
+                                <label for="task3"></label>
+                            </div>
+                            <div class="task-details">
+                                <h4>Chemistry Lab Report</h4>
+                                <p>Due: Next Monday, 5:00 PM</p>
+                            </div>
+                            <span class="priority low">Low</span>
+                            <i class="fas fa-chevron-right task-arrow"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- My Courses Section -->
+        <section id="courses" class="section">
+            <div class="courses-container">
+                <div class="courses-header">
+                    <h2><i class="fas fa-book-open"></i> My Courses</h2>
+                    <p>Continue your learning journey across various subjects</p>
+                    <div class="courses-actions">
+                        <button class="filter-btn active" onclick="filterCourses('all')">All Courses</button>
+                        <button class="filter-btn" onclick="filterCourses('in-progress')">In Progress</button>
+                        <button class="filter-btn" onclick="filterCourses('completed')">Completed</button>
+                        <button class="filter-btn" onclick="filterCourses('not-started')">Not Started</button>
+                    </div>
+                </div>
+
+                <!-- Course Statistics -->
+                <div class="course-stats">
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>8</h3>
+                            <p>In Progress</p>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>4</h3>
+                            <p>Completed</p>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>42h</h3>
+                            <p>Total Time</p>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>156</h3>
+                            <p>Points Earned</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search and Sort -->
+                <div class="course-controls">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="course-search" placeholder="Search courses..." onkeyup="searchCourses()">
+                    </div>
+                    <div class="sort-dropdown">
+                        <select id="course-sort" onchange="sortCourses()">
+                            <option value="recent">Recently Accessed</option>
+                            <option value="progress">Progress</option>
+                            <option value="name">Course Name</option>
+                            <option value="difficulty">Difficulty</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Course Grid -->
+                <div class="courses-grid" id="courses-grid">
+                    <!-- Mathematics Course -->
+                    <div class="course-card" data-status="in-progress" data-category="mathematics">
+                        <div class="course-image">
+                            <div class="course-bg mathematics">
+                                <i class="fas fa-calculator"></i>
+                            </div>
+                            <div class="course-status in-progress">In Progress</div>
+                            <div class="course-difficulty intermediate">Intermediate</div>
+                        </div>
+                        <div class="course-content">
+                            <h3>Advanced Calculus</h3>
+                            <p class="course-instructor">Dr. Rajesh Kumar</p>
+                            <p class="course-description">Master integration, differentiation, and advanced mathematical concepts</p>
+                            <div class="course-progress">
+                                <div class="progress-info">
+                                    <span>Progress</span>
+                                    <span>75%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 75%"></div>
+                                </div>
+                            </div>
+                            <div class="course-meta">
+                                <span><i class="fas fa-play-circle"></i> 24/32 lessons</span>
+                                <span><i class="fas fa-clock"></i> 12h left</span>
+                                <span><i class="fas fa-star"></i> 4.8</span>
+                            </div>
+                            <div class="course-actions">
+                                <button class="continue-btn" onclick="continueCourse('calculus')">
+                                    <i class="fas fa-play"></i> Continue Learning
+                                </button>
+                                <button class="bookmark-btn" onclick="toggleBookmark('calculus')">
+                                    <i class="fas fa-bookmark"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Load More Button -->
+                <div class="load-more-section">
+                    <button class="load-more-btn" onclick="loadMoreCourses()">
+                        <i class="fas fa-plus-circle"></i> Load More Courses
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Tutor Section -->
+        <section id="ai-tutor" class="section">
+            <div class="ai-tutor-container">
+                <div class="ai-chat-header">
+                    <h2><i class="fas fa-robot"></i> AI Tutor Assistant</h2>
+                    <p>Ask me anything about your studies!</p>
+                </div>
+
+                <div class="chat-container">
+                    <div class="chat-messages" id="chat-messages">
+                        <div class="message ai-message">
+                            <div class="message-avatar">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="message-content">
+                                <p>Hello! I'm your AI tutor. How can I help you today?</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="quick-questions">
+                        <button class="quick-btn" onclick="askQuestion('Explain quadratic equations')">
+                            <i class="fas fa-calculator"></i> Quadratic Equations
+                        </button>
+                        <button class="quick-btn" onclick="askQuestion('Help with essay writing')">
+                            <i class="fas fa-pen"></i> Essay Writing
+                        </button>
+                        <button class="quick-btn" onclick="askQuestion('Study schedule tips')">
+                            <i class="fas fa-calendar"></i> Study Schedule
+                        </button>
+                    </div>
+
+                    <div class="chat-input-container">
+                        <input type="text" id="chat-input" placeholder="Type your question here..." 
+                               onkeypress="handleKeyPress(event)">
+                        <button onclick="sendMessage()" class="send-btn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Wellness Section -->
+        <section id="wellness" class="section">
+            <div class="wellness-container">
+                <div class="wellness-header">
+                    <h2><i class="fas fa-heart"></i> Mental Wellness Center</h2>
+                    <p>Take care of your mind while you learn</p>
+                </div>
+
+                <div class="wellness-grid">
+                    <div class="wellness-card meditation">
+                        <div class="wellness-icon">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <h3>Guided Meditation</h3>
+                        <p>5-minute stress relief session</p>
+                        <button class="wellness-btn" onclick="startMeditation()">Start Session</button>
+                        <div class="timer-display">05:00</div>
+                    </div>
+
+                    <div class="wellness-card mood-tracker">
+                        <div class="wellness-icon">
+                            <i class="fas fa-smile"></i>
+                        </div>
+                        <h3>Mood Tracker</h3>
+                        <p>How are you feeling today?</p>
+                        <div class="mood-options">
+                            <button class="mood-btn" data-mood="happy">😊</button>
+                            <button class="mood-btn" data-mood="neutral">😐</button>
+                            <button class="mood-btn" data-mood="stressed">😰</button>
+                            <button class="mood-btn" data-mood="sad">😢</button>
+                        </div>
+                    </div>
+
+                    <div class="wellness-card breathing">
+                        <div class="wellness-icon">
+                            <i class="fas fa-wind"></i>
+                        </div>
+                        <h3>Breathing Exercise</h3>
+                        <p>4-7-8 breathing technique</p>
+                        <div class="breathing-circle">
+                            <div class="circle-inner">Breathe</div>
+                        </div>
+                        <button class="wellness-btn" onclick="startBreathing()">Begin</button>
+                    </div>
+
+                    <div class="wellness-card resources">
+                        <div class="wellness-icon">
+                            <i class="fas fa-book-heart"></i>
+                        </div>
+                        <h3>Wellness Resources</h3>
+                        <ul class="resource-list">
+                            <li><a href="#">Study-Life Balance Guide</a></li>
+                            <li><a href="#">Exam Anxiety Tips</a></li>
+                            <li><a href="#">Sleep Hygiene for Students</a></li>
+                            <li><a href="#">Emergency Support Contacts</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Community Section -->
+        <section id="community" class="section">
+            <div class="community-container">
+                <div class="community-header">
+                    <h2><i class="fas fa-users"></i> Learning Community</h2>
+                    <p>Connect, collaborate, and grow together</p>
+                </div>
+
+                <div class="community-tabs">
+                    <button class="tab-btn active" onclick="switchTab('discussions')">Discussions</button>
+                    <button class="tab-btn" onclick="switchTab('study-groups')">Study Groups</button>
+                    <button class="tab-btn" onclick="switchTab('leaderboard')">Leaderboard</button>
+                </div>
+
+                <div id="discussions" class="tab-content active">
+                    <div class="discussion-list">
+                        <div class="discussion-item">
+                            <div class="discussion-avatar">
+                                <img src="https://via.placeholder.com/40x40/ff6b6b/ffffff?text=A" alt="Avatar">
+                            </div>
+                            <div class="discussion-content">
+                                <h4>Help with Organic Chemistry mechanisms</h4>
+                                <p>Can someone explain SN1 vs SN2 reactions? I'm confused about the differences...</p>
+                                <div class="discussion-meta">
+                                    <span class="author">Alex Kumar</span>
+                                    <span class="time">2 hours ago</span>
+                                    <span class="replies">5 replies</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="discussion-item">
+                            <div class="discussion-avatar">
+                                <img src="https://via.placeholder.com/40x40/4ecdc4/ffffff?text=P" alt="Avatar">
+                            </div>
+                            <div class="discussion-content">
+                                <h4>Study group for JEE Advanced Math</h4>
+                                <p>Looking for serious students to form a math study group. Daily problem solving sessions...</p>
+                                <div class="discussion-meta">
+                                    <span class="author">Priya Sharma</span>
+                                    <span class="time">5 hours ago</span>
+                                    <span class="replies">12 replies</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="study-groups" class="tab-content">
+                    <div class="study-groups-grid">
+                        <div class="study-group-card">
+                            <h4>Physics Problem Solvers</h4>
+                            <p>Daily physics problem discussions</p>
+                            <div class="group-stats">
+                                <span><i class="fas fa-users"></i> 24 members</span>
+                                <span><i class="fas fa-clock"></i> 7 PM daily</span>
+                            </div>
+                            <button class="join-btn">Join Group</button>
+                        </div>
+
+                        <div class="study-group-card">
+                            <h4>Chemistry Lab Partners</h4>
+                            <p>Collaborative chemistry experiments</p>
+                            <div class="group-stats">
+                                <span><i class="fas fa-users"></i> 18 members</span>
+                                <span><i class="fas fa-clock"></i> Weekends</span>
+                            </div>
+                            <button class="join-btn">Join Group</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="leaderboard" class="tab-content">
+                    <div class="leaderboard-list">
+                        <div class="leaderboard-item rank-1">
+                            <div class="rank-badge">1</div>
+                            <div class="user-info">
+                                <img src="https://via.placeholder.com/40x40/4f46e5/ffffff?text=R" alt="User">
+                                <div>
+                                    <h4>Rajesh Patel</h4>
+                                    <span>2,450 points</span>
+                                </div>
+                            </div>
+                            <div class="achievement-badges">
+                                <i class="fas fa-trophy" title="Top Performer"></i>
+                                <i class="fas fa-fire" title="Streak Master"></i>
+                            </div>
+                        </div>
+
+                        <div class="leaderboard-item rank-2">
+                            <div class="rank-badge">2</div>
+                            <div class="user-info">
+                                <img src="https://via.placeholder.com/40x40/06b6d4/ffffff?text=S" alt="User">
+                                <div>
+                                    <h4>Sneha Singh</h4>
+                                    <span>2,380 points</span>
+                                </div>
+                            </div>
+                            <div class="achievement-badges">
+                                <i class="fas fa-medal" title="High Achiever"></i>
+                            </div>
+                        </div>
+
+                        <div class="leaderboard-item rank-3">
+                            <div class="rank-badge">3</div>
+                            <div class="user-info">
+                                <img src="https://via.placeholder.com/40x40/f59e0b/ffffff?text=A" alt="User">
+                                <div>
+                                    <h4>Arjun Mehta</h4>
+                                    <span>2,210 points</span>
+                                </div>
+                            </div>
+                            <div class="achievement-badges">
+                                <i class="fas fa-star" title="Consistent Learner"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AR/VR Section -->
+        <section id="ar-vr" class="section">
+            <div class="arvr-container">
+                <div class="arvr-header">
+                    <h2><i class="fas fa-vr-cardboard"></i> Immersive Learning</h2>
+                    <p>Experience education in virtual and augmented reality</p>
+                </div>
+
+                <div class="arvr-grid">
+                    <div class="arvr-card vr-lab">
+                        <div class="card-image">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                        <h3>Virtual Chemistry Lab</h3>
+                        <p>Conduct safe experiments in a virtual environment</p>
+                        <div class="card-features">
+                            <span>• 50+ Experiments</span>
+                            <span>• Real-time Results</span>
+                            <span>• Safety First</span>
+                        </div>
+                        <button class="arvr-btn" onclick="launchVRLab()">Launch VR Lab</button>
+                    </div>
+
+                    <div class="arvr-card ar-geometry">
+                        <div class="card-image">
+                            <i class="fas fa-cube"></i>
+                        </div>
+                        <h3>AR Geometry Explorer</h3>
+                        <p>Visualize 3D shapes and mathematical concepts</p>
+                        <div class="card-features">
+                            <span>• 3D Visualization</span>
+                            <span>• Interactive Models</span>
+                            <span>• Step-by-step Solutions</span>
+                        </div>
+                        <button class="arvr-btn" onclick="startARMode()">Start AR Mode</button>
+                    </div>
+
+                    <div class="arvr-card historical-tour">
+                        <div class="card-image">
+                            <i class="fas fa-landmark"></i>
+                        </div>
+                        <h3>Historical Time Travel</h3>
+                        <p>Visit ancient civilizations and historical events</p>
+                        <div class="card-features">
+                            <span>• 10+ Civilizations</span>
+                            <span>• Interactive Tours</span>
+                            <span>• Educational Guides</span>
+                        </div>
+                        <button class="arvr-btn" onclick="beginHistoricalJourney()">Begin Journey</button>
+                    </div>
+                </div>
+
+                <div class="device-compatibility">
+                    <h3>Device Compatibility</h3>
+                    <div class="compatibility-grid">
+                        <div class="device-item">
+                            <i class="fas fa-mobile-alt"></i>
+                            <span>Mobile AR</span>
+                        </div>
+                        <div class="device-item">
+                            <i class="fas fa-vr-cardboard"></i>
+                            <span>VR Headset</span>
+                        </div>
+                        <div class="device-item">
+                            <i class="fas fa-desktop"></i>
+                            <span>Desktop</span>
+                        </div>
+                        <div class="device-item">
+                            <i class="fas fa-tablet-alt"></i>
+                            <span>Tablet</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Task Details Section - Physics Assignment -->
+        <section id="task-assignment-physics" class="section task-section">
+            <div class="task-container">
+                <div class="task-header">
+                    <button class="back-btn" onclick="goBackToDashboard()">
+                        <i class="fas fa-arrow-left"></i> Back to Dashboard
+                    </button>
+                    <h2><i class="fas fa-atom"></i> Physics Assignment</h2>
+                    <div class="task-priority high">High Priority</div>
+                </div>
+
+                <div class="task-details-card">
+                    <div class="task-info-grid">
+                        <div class="task-info-item">
+                            <label>Subject:</label>
+                            <span>Quantum Mechanics</span>
+                        </div>
+                        <div class="task-info-item">
+                            <label>Due Date:</label>
+                            <span class="due-date urgent">Tomorrow, 11:59 PM</span>
+                        </div>
+                        <div class="task-info-item">
+                            <label>Instructor:</label>
+                            <span>Prof. Priya Sharma</span>
+                        </div>
+                        <div class="task-info-item">
+                            <label>Points:</label>
+                            <span>25 points</span>
+                        </div>
+                    </div>
+
+                    <div class="task-description">
+                        <h3>Assignment Description</h3>
+                        <p>Complete the quantum mechanics problem set focusing on wave-particle duality, Heisenberg uncertainty principle, and Schrödinger equation applications. Show all work and explain your reasoning for each solution.</p>
+
+                        <h4>Requirements:</h4>
+                        <ul>
+                            <li>Solve problems 1-15 from Chapter 8</li>
+                            <li>Include detailed mathematical derivations</li>
+                            <li>Provide physical interpretations for each result</li>
+                            <li>Submit in PDF format through the course portal</li>
+                        </ul>
+                    </div>
+
+                    <div class="task-progress">
+                        <h3>Your Progress</h3>
+                        <div class="progress-item">
+                            <span>Completion Status</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="physics-progress" style="width: 0%"></div>
+                            </div>
+                            <span id="physics-progress-text">0% Complete</span>
+                        </div>
+                        <div class="task-checklist">
+                            <label class="checklist-item">
+                                <input type="checkbox" onclick="updateTaskProgress('physics')">
+                                <span>Read assignment instructions</span>
+                            </label>
+                            <label class="checklist-item">
+                                <input type="checkbox" onclick="updateTaskProgress('physics')">
+                                <span>Download problem set PDF</span>
+                            </label>
+                            <label class="checklist-item">
+                                <input type="checkbox" onclick="updateTaskProgress('physics')">
+                                <span>Review lecture materials</span>
+                            </label>
+                            <label class="checklist-item">
+                                <input type="checkbox" onclick="updateTaskProgress('physics')">
+                                <span>Complete problems 1-5</span>
+                            </label>
+                            <label class="checklist-item">
+                                <input type="checkbox" onclick="updateTaskProgress('physics')">
+                                <span>Complete problems 6-10</span>
+                            </label>
+                            <label class="checklist-item">
+                                <input type="checkbox" onclick="updateTaskProgress('physics')">
+                                <span>Complete problems 11-15</span>
+                            </label>
+                            <label class="checklist-item">
+                                <input type="checkbox" onclick="updateTaskProgress('physics')">
+                                <span>Review and format solutions</span>
+                            </label>
+                            <label class="checklist-item">
+                                <input type="checkbox" onclick="updateTaskProgress('physics')">
+                                <span>Submit assignment</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="task-actions">
+                        <button class="start-task-btn" onclick="startTask('assignment-physics')">
+                            <i class="fas fa-play"></i> Start Working
+                        </button>
+                        <button class="ask-help-btn" onclick="askForHelp('quantum-mechanics')">
+                            <i class="fas fa-question-circle"></i> Ask AI Tutor
+                        </button>
+                        <button class="set-reminder-btn" onclick="setReminder('assignment-physics')">
+                            <i class="fas fa-clock"></i> Set Reminder
+                        </button>
+                        <button class="submit-btn" id="physics-submit-btn" onclick="submitAssignment('assignment-physics')" disabled>
+                            <i class="fas fa-upload"></i> Submit Assignment
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Task Details Section - Math Quiz -->
+        <section id="task-quiz-math" class="section task-section">
+            <div class="task-container">
+                <div class="task-header">
+                    <button class="back-btn" onclick="goBackToDashboard()">
+                        <i class="fas fa-arrow-left"></i> Back to Dashboard
+                    </button>
+                    <h2><i class="fas fa-calculator"></i> Math Quiz Preparation</h2>
+                    <div class="task-priority medium">Medium Priority</div>
+                </div>
+
+                <div class="task-details-card">
+                    <div class="task-info-grid">
+                        <div class="task-info-item">
+                            <label>Subject:</label>
+                            <span>Advanced Calculus</span>
+                        </div>
+                        <div class="task-info-item">
+                            <label>Quiz Date:</label>
+                            <span class="due-date">Friday, 2:00 PM</span>
+                        </div>
+                        <div class="task-info-item">
+                            <label>Instructor:</label>
+                            <span>Dr. Rajesh Kumar</span>
+                        </div>
+                        <div class="task-info-item">
+                            <label>Duration:</label>
+                            <span>90 minutes</span>
+                        </div>
+                    </div>
+
+                    <div class="task-actions">
+                        <button class="start-task-btn" onclick="startStudySession('Advanced Calculus')">
+                            <i class="fas fa-book-open"></i> Start Studying
+                        </button>
+                        <button class="practice-btn" onclick="startPracticeQuiz()">
+                            <i class="fas fa-play"></i> Practice Quiz
+                        </button>
+                        <button class="ask-help-btn" onclick="askForHelp('calculus-review')">
+                            <i class="fas fa-question-circle"></i> Get Help
+                        </button>
+                        <button class="set-reminder-btn" onclick="setReminder('quiz-math')">
+                            <i class="fas fa-clock"></i> Set Reminder
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Task Details Section - Chemistry Lab -->
+        <section id="task-chemistry-lab" class="section task-section">
+            <div class="task-container">
+                <div class="task-header">
+                    <button class="back-btn" onclick="goBackToDashboard()">
+                        <i class="fas fa-arrow-left"></i> Back to Dashboard
+                    </button>
+                    <h2><i class="fas fa-flask"></i> Chemistry Lab Report</h2>
+                    <div class="task-priority low">Low Priority</div>
+                </div>
+
+                <div class="task-details-card">
+                    <div class="task-info-grid">
+                        <div class="task-info-item">
+                            <label>Subject:</label>
+                            <span>Organic Chemistry</span>
+                        </div>
+                        <div class="task-info-item">
+                            <label>Due Date:</label>
+                            <span class="due-date">Next Monday, 5:00 PM</span>
+                        </div>
+                        <div class="task-info-item">
+                            <label>Instructor:</label>
+                            <span>Dr. Anjali Patel</span>
+                        </div>
+                        <div class="task-info-item">
+                            <label>Points:</label>
+                            <span>15 points</span>
+                        </div>
+                    </div>
+
+                    <div class="task-actions">
+                        <button class="start-task-btn" onclick="startTask('chemistry-lab')">
+                            <i class="fas fa-pencil-alt"></i> Start Writing
+                        </button>
+                        <button class="ask-help-btn" onclick="askForHelp('lab-report-writing')">
+                            <i class="fas fa-question-circle"></i> Get Help
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Floating AI Assistant -->
+    <div class="floating-ai" onclick="toggleAIAssistant()">
+        <i class="fas fa-robot"></i>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
